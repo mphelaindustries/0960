@@ -38,7 +38,7 @@ function Home() {
               <br />
               <span className="brush inline-block text-primary-foreground">YOUR</span>
               <br />
-              <span className="inline-block lg:ml-[18%] lg:text-[13rem]">STORY.</span>
+              <span className="inline-block lg:ml-[22%] lg:text-[13rem]">STORY.</span>
             </h1>
             <p className="mt-6 max-w-md text-lg text-ink-muted">
               More than a T-shirt. A connection to where you're from.
@@ -52,7 +52,7 @@ function Home() {
               </Link></Button>
             </div>
           </div>
-          <div className="relative lg:-ml-64">
+          <div className="relative lg:-ml-72">
             <img src={poster.url} alt="Elim T-shirt collection — front and back designs" className="mx-auto w-full max-w-md -rotate-2 border-4 border-ink-foreground shadow-2xl" />
             <span className="absolute -right-2 top-6 rotate-3 bg-primary px-3 py-2 font-display text-xl leading-none text-primary-foreground md:-right-6">
               FRONT &amp; BACK<br />PRINT
