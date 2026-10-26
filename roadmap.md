@@ -1,3 +1,3 @@
-- [ ] Restore the original poster hero and front/back product photos.
-- [ ] Remove 3D display code, model assets, styles and dependencies.
-- [ ] Verify the restored storefront and product navigation.
+- [x] Restore the original poster hero and front/back product photos.
+- [x] Remove 3D display code, model assets, styles and dependencies.
+- [x] Verify the restored storefront and product navigation.
