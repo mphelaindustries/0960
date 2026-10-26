@@ -219,7 +219,7 @@ body { font-family: var(--font-body); }
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .logo-arrive {
+  .intro-logo {
     animation: none;
   }
   .intro-splash {
