@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ShoppingCart } from "lucide-react";
-import { PRODUCTS, zar } from "@/lib/store";
+import { productsQuery, useProducts } from "@/lib/catalog";
+import { ProductCard } from "@/components/product-card";
 import { TornEdge } from "@/components/site";
 import poster from "@/assets/poster.jpg.asset.json";
 import { Button } from "@/components/ui/button";
@@ -16,11 +17,14 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
+  loader: ({ context }) => context.queryClient.ensureQueryData(productsQuery),
+  errorComponent: () => <p className="py-24 text-center">Couldn't load the store. Please refresh.</p>,
   component: Home,
 });
 
 function Home() {
-  const p = PRODUCTS[0];
+  const products = useProducts();
+  const p = products[0];
   if (!p) return null;
   return (
     <>
@@ -74,10 +78,10 @@ function Home() {
             </Link>
           </div>
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {PRODUCTS.map((x) => (
-              <ProductCard key={x.slug} slug={x.slug} />
+            {products.slice(0, 4).map((x) => (
+              <ProductCard key={x.slug} product={x} />
             ))}
-            {[1, 2, 3].map((i) => (
+            {[1, 2, 3].slice(0, Math.max(0, 4 - products.length)).map((i) => (
               <div key={i} className="hidden aspect-[4/5] place-items-center rounded-sm border-2 border-dashed border-border text-center sm:grid">
                 <div>
                   <p className="font-display text-3xl text-muted-foreground">COMING SOON</p>
@@ -120,25 +124,5 @@ function Home() {
         </div>
       </section>
     </>
-  );
-}
-
-export function ProductCard({ slug }: { slug: string }) {
-   const x = PRODUCTS.find((p) => p.slug === slug);
-   if (!x) return null;
-  return (
-    <Link to="/product/$slug" params={{ slug }} className="group block">
-      <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-card">
-        <span className="absolute left-0 top-0 z-10 bg-secondary px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-secondary-foreground">New</span>
-        <img src={x.front} alt={x.name} className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:opacity-0" />
-        <img src={x.back} alt="" className="absolute inset-0 h-full w-full scale-105 object-cover opacity-0 transition duration-500 group-hover:scale-100 group-hover:opacity-100" />
-      </div>
-      <p className="mt-3 text-sm font-bold uppercase">{x.name}</p>
-      <p className="font-bold">{zar(x.price)}</p>
-      <p className="text-xs text-muted-foreground">{x.tagline}</p>
-      <span className="mt-3 flex items-center justify-between rounded-sm bg-secondary px-4 py-2 text-xs font-bold uppercase tracking-widest text-secondary-foreground group-hover:bg-primary group-hover:text-primary-foreground">
-        View details <ArrowRight className="h-4 w-4" />
-      </span>
-    </Link>
   );
 }
