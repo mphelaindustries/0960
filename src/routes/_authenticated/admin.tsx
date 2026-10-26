@@ -2,6 +2,7 @@ import { createFileRoute, Link, Outlet, redirect } from "@tanstack/react-router"
 import { BarChart3, Package, Receipt, Users, Settings, Store, LogOut } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSignOut } from "@/hooks/use-auth";
+import logo from "@/assets/logo.png";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
@@ -36,9 +37,9 @@ function AdminLayout() {
     <div className="min-h-screen bg-paper md:grid md:grid-cols-[230px_1fr]">
       <aside className="bg-ink text-ink-foreground md:sticky md:top-0 md:h-screen">
         <div className="flex items-center justify-between px-5 py-5">
-          <Link to="/" className="font-display text-3xl leading-none">
-            ELIM<span className="text-primary">.</span>
-            <span className="ml-2 align-middle font-body text-[10px] tracking-[0.3em] text-ink-muted">ADMIN</span>
+          <Link to="/" aria-label="ELIM 0960 — home" className="flex items-center gap-2">
+            <img src={logo} alt="ELIM 0960" className="h-9 w-auto" />
+            <span className="font-body text-[10px] tracking-[0.3em] text-ink-muted">ADMIN</span>
           </Link>
         </div>
         <nav className="flex gap-1 overflow-x-auto px-3 pb-3 md:flex-col md:pb-0">
