@@ -16,6 +16,7 @@ export const Route = createFileRoute("/product/$slug")({
       { property: "og:title", content: loaderData?.name ?? "ELIM 0960" },
       { property: "og:description", content: loaderData?.description ?? "" },
       { property: "og:type", content: "product" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   notFoundComponent: () => (

@@ -9,6 +9,8 @@ export const Route = createFileRoute("/cart")({
       { name: "description", content: "Review your ELIM 0960 order before checkout." },
       { property: "og:title", content: "Your Cart — ELIM 0960" },
       { property: "og:description", content: "Review your order." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: CartPage,
