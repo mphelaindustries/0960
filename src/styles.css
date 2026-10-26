@@ -172,6 +172,35 @@ body { font-family: var(--font-body); }
   padding: 0 0.15em;
 }
 
+@keyframes logo-arrive {
+  0% {
+    opacity: 0;
+    transform: perspective(600px) translateZ(-400px) scale(0.35);
+    filter: blur(6px);
+  }
+  55% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  78% {
+    transform: perspective(600px) translateZ(0) scale(1.06);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(600px) translateZ(0) scale(1);
+    filter: blur(0);
+  }
+}
+.logo-arrive {
+  animation: logo-arrive 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+  will-change: transform, opacity, filter;
+}
+@media (prefers-reduced-motion: reduce) {
+  .logo-arrive {
+    animation: none;
+  }
+}
+
 @media print {
   body * { visibility: hidden; }
   .print-area, .print-area * { visibility: visible; }
