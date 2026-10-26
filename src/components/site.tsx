@@ -3,6 +3,7 @@ import { ShoppingBag, Menu, X, Shirt, ShieldCheck, Truck, MessageCircle, User, L
 import { useState } from "react";
 import { useCart } from "@/lib/store";
 import { useAuth } from "@/hooks/use-auth";
+import logo from "@/assets/logo.png";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -21,9 +22,8 @@ export function Header() {
       </div>
       <header className="sticky top-0 z-40 border-b border-line bg-ink/95 text-ink-foreground backdrop-blur">
         <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-4 md:grid-cols-3">
-          <Link to="/" className="font-display text-3xl leading-none tracking-wide">
-            ELIM<span className="text-primary">.</span>
-            <span className="ml-2 align-middle font-body text-[10px] tracking-[0.3em] text-ink-muted">0960</span>
+          <Link to="/" aria-label="ELIM 0960 — home" className="justify-self-start">
+            <img src={logo} alt="ELIM 0960" className="h-10 w-auto md:h-12" />
           </Link>
           <nav className="hidden justify-center gap-8 text-xs font-semibold tracking-[0.2em] md:flex">
             {NAV.map((n) => (
@@ -93,8 +93,9 @@ export function Footer() {
           </div>
         ))}
       </div>
-      <div className="border-t border-line py-4 text-center text-[11px] tracking-widest text-ink-muted">
-        © {new Date().getFullYear()} ELIM 0960 · WEAR YOUR STORY
+      <div className="flex flex-col items-center gap-3 border-t border-line py-5">
+        <img src={logo} alt="ELIM 0960" className="h-9 w-auto" loading="lazy" />
+        <p className="text-center text-[11px] tracking-widest text-ink-muted">© {new Date().getFullYear()} ELIM 0960 · WEAR YOUR STORY</p>
       </div>
     </footer>
   );
