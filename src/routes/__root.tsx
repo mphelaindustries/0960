@@ -13,6 +13,7 @@ import { useEffect, type ReactNode } from "react";
 
 import { CartProvider } from "@/lib/store";
 import { Header, Footer } from "@/components/site";
+import { IntroSplash } from "@/components/intro-splash";
 import { AuthProvider } from "@/hooks/use-auth";
 import { Toaster } from "@/components/ui/sonner";
 import appCss from "../styles.css?url";
@@ -127,6 +128,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+      <IntroSplash />
       <AuthProvider>
         <CartProvider>
           {isAdmin ? (

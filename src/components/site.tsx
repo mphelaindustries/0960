@@ -23,7 +23,7 @@ export function Header() {
       <header className="sticky top-0 z-40 border-b border-line bg-ink/95 text-ink-foreground backdrop-blur">
         <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-4 md:grid-cols-3">
           <Link to="/" aria-label="ELIM 0960 — home" className="justify-self-start">
-            <img src={logo} alt="ELIM 0960" className="logo-arrive h-10 w-auto md:h-12" />
+            <img src={logo} alt="ELIM 0960" className="h-10 w-auto md:h-12" />
           </Link>
           <nav className="hidden justify-center gap-8 text-xs font-semibold tracking-[0.2em] md:flex">
             {NAV.map((n) => (

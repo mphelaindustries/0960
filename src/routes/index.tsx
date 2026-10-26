@@ -33,7 +33,7 @@ function Home() {
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 pb-16 pt-12 md:grid-cols-2 md:pb-24">
           <div>
             <p className="font-hand text-2xl text-primary">Simple · Clean · Unique</p>
-            <h1 className="relative z-10 mt-2 font-display text-7xl leading-[0.85] sm:text-8xl lg:w-[135%] lg:text-[10rem]">
+            <h1 className="relative z-10 mt-2 font-display text-[8rem] leading-[0.85] md:text-[9rem] lg:w-[135%] lg:text-[10rem]">
               WEAR
               <br />
               <span className="brush inline-block text-primary-foreground">YOUR</span>
