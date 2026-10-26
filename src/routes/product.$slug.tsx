@@ -47,8 +47,8 @@ function ProductPage() {
   const maxQty = Math.max(1, Math.min(20, left));
 
   const addToCart = (go: boolean) => {
-    if (!size) return setErr("Please choose a size.");
-    if (left < qty) return setErr(left > 0 ? `Only ${left} left in size ${size}.` : `Size ${size} is sold out.`);
+    if (!size) return void setErr("Please choose a size.");
+    if (left < qty) return void setErr(left > 0 ? `Only ${left} left in size ${size}.` : `Size ${size} is sold out.`);
     add({ slug: p.slug, size, qty });
     if (go) nav({ to: "/cart" });
     else setErr("");

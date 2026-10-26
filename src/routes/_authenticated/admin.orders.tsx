@@ -23,7 +23,7 @@ function Orders() {
 
   const setStatus = async (o: AdminOrder, status: OrderStatus) => {
     const { error } = await supabase.from("orders").update({ status }).eq("id", o.id);
-    if (error) return toast.error("Couldn't update order");
+    if (error) return void toast.error("Couldn't update order");
     toast.success(`Order #${o.order_number} marked ${STATUS_LABEL[status]}`);
     qc.invalidateQueries({ queryKey: ["admin"] });
     qc.invalidateQueries({ queryKey: ["products"] });

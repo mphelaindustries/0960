@@ -73,9 +73,9 @@ function Products() {
     if (!draft) return;
     const price = Number(draft.price);
     const slug = slugify(draft.slug || draft.name);
-    if (!draft.name.trim() || !slug) return toast.error("Add a product name");
-    if (!(price >= 0) || draft.price === "") return toast.error("Add a valid price");
-    if (!draft.front_image) return toast.error("Add a front photo");
+    if (!draft.name.trim() || !slug) return void toast.error("Add a product name");
+    if (!(price >= 0) || draft.price === "") return void toast.error("Add a valid price");
+    if (!draft.front_image) return void toast.error("Add a front photo");
     setSaving(true);
     const row = {
       name: draft.name.trim(), slug, price, tagline: draft.tagline, description: draft.description,
@@ -86,14 +86,14 @@ function Products() {
       : await supabase.from("products").insert(row).select("id").single();
     if (res.error || !res.data) {
       setSaving(false);
-      return toast.error(res.error?.code === "23505" ? "Another product already uses that link name" : "Couldn't save product");
+      return void toast.error(res.error?.code === "23505" ? "Another product already uses that link name" : "Couldn't save product");
     }
     const id = res.data.id;
     const { error } = await supabase.from("product_stock").upsert(
       SIZES.map((s) => ({ product_id: id, size: s, quantity: Math.max(0, Math.floor(Number(draft.stock[s]) || 0)) })),
     );
     setSaving(false);
-    if (error) return toast.error("Product saved, but stock didn't update");
+    if (error) return void toast.error("Product saved, but stock didn't update");
     toast.success("Product saved");
     setDraft(null);
     refresh();
@@ -102,7 +102,7 @@ function Products() {
   const remove = async (id: string, name: string) => {
     if (!confirm(`Delete "${name}"? Past orders keep their details.`)) return;
     const { error } = await supabase.from("products").delete().eq("id", id);
-    if (error) return toast.error("Couldn't delete product");
+    if (error) return void toast.error("Couldn't delete product");
     toast.success("Product deleted");
     refresh();
   };

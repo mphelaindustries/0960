@@ -21,16 +21,16 @@ function SettingsPage() {
   const save = async (e: React.FormEvent) => {
     e.preventDefault();
     const number = f.whatsapp_number.replace(/\D/g, "");
-    if (number.length < 10) return toast.error("Enter the WhatsApp number with country code, e.g. 27821234567");
+    if (number.length < 10) return void toast.error("Enter the WhatsApp number with country code, e.g. 27821234567");
     const fee = Number(f.delivery_fee);
-    if (!(fee >= 0)) return toast.error("Enter a valid delivery fee");
+    if (!(fee >= 0)) return void toast.error("Enter a valid delivery fee");
     setSaving(true);
     const { error } = await supabase.from("store_settings").update({
       store_name: f.store_name.trim() || "ELIM 0960", whatsapp_number: number, delivery_fee: fee,
       contact_email: f.contact_email.trim(), updated_at: new Date().toISOString(),
     }).eq("id", 1);
     setSaving(false);
-    if (error) return toast.error("Couldn't save settings");
+    if (error) return void toast.error("Couldn't save settings");
     toast.success("Settings saved");
     qc.invalidateQueries({ queryKey: ["admin", "settings"] });
     qc.invalidateQueries({ queryKey: ["settings"] });

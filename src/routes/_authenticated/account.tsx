@@ -61,7 +61,7 @@ function Account() {
     setSaving(true);
     const { error } = await supabase.from("profiles").update({ ...f, updated_at: new Date().toISOString() }).eq("id", uid);
     setSaving(false);
-    if (error) return toast.error("Couldn't save your details");
+    if (error) return void toast.error("Couldn't save your details");
     toast.success("Details saved");
     qc.invalidateQueries({ queryKey: ["profile", uid] });
   };
