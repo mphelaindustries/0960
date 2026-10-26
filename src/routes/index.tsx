@@ -33,12 +33,12 @@ function Home() {
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 pb-16 pt-12 md:grid-cols-2 md:pb-24">
           <div>
             <p className="font-hand text-2xl text-primary">Simple · Clean · Unique</p>
-            <h1 className="relative z-10 mt-2 font-display text-7xl leading-[0.85] sm:text-8xl md:w-[115%] lg:w-[128%] lg:text-[9rem]">
+            <h1 className="relative z-10 mt-2 font-display text-7xl leading-[0.85] sm:text-8xl lg:w-[135%] lg:text-[10rem]">
               WEAR
               <br />
               <span className="brush inline-block text-primary-foreground">YOUR</span>
               <br />
-              STORY.
+              <span className="inline-block lg:ml-[14%] lg:text-[13rem]">STORY.</span>
             </h1>
             <p className="mt-6 max-w-md text-lg text-ink-muted">
               More than a T-shirt. A connection to where you're from.
@@ -52,7 +52,7 @@ function Home() {
               </Link></Button>
             </div>
           </div>
-          <div className="relative">
+          <div className="relative lg:-ml-40">
             <img src={poster.url} alt="Elim T-shirt collection — front and back designs" className="mx-auto w-full max-w-md -rotate-2 border-4 border-ink-foreground shadow-2xl" />
             <span className="absolute -right-2 top-6 rotate-3 bg-primary px-3 py-2 font-display text-xl leading-none text-primary-foreground md:-right-6">
               FRONT &amp; BACK<br />PRINT
