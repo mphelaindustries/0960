@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { ShoppingBag, Menu, X, Shirt, ShieldCheck, Truck, MessageCircle } from "lucide-react";
+import { ShoppingBag, Menu, X, Shirt, ShieldCheck, Truck, MessageCircle, User, LayoutDashboard } from "lucide-react";
 import { useState } from "react";
 import { useCart } from "@/lib/store";
+import { useAuth } from "@/hooks/use-auth";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -11,6 +12,7 @@ const NAV = [
 
 export function Header() {
   const { count } = useCart();
+  const { user, isAdmin } = useAuth();
   const [open, setOpen] = useState(false);
   return (
     <>
@@ -31,6 +33,14 @@ export function Header() {
             ))}
           </nav>
           <div className="flex items-center justify-end gap-4">
+            {isAdmin && (
+              <Link to="/admin" aria-label="Dashboard" className="hidden items-center gap-1 text-xs font-bold uppercase tracking-widest text-primary sm:flex">
+                <LayoutDashboard className="h-5 w-5" /> Dashboard
+              </Link>
+            )}
+            <Link to={user ? "/account" : "/auth"} aria-label={user ? "My account" : "Sign in"} className="hover:text-primary">
+              <User className="h-6 w-6" />
+            </Link>
             <Link to="/cart" aria-label="Cart" className="relative">
               <ShoppingBag className="h-6 w-6" />
               {count > 0 && (
@@ -51,6 +61,9 @@ export function Header() {
                 {n.label}
               </Link>
             ))}
+            {isAdmin && (
+              <Link to="/admin" onClick={() => setOpen(false)} className="font-display text-2xl tracking-wide text-primary">Dashboard</Link>
+            )}
           </nav>
         )}
       </header>

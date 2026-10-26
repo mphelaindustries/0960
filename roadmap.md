@@ -1,3 +1,3 @@
-- [x] Restore the original poster hero and front/back product photos.
-- [x] Remove 3D display code, model assets, styles and dependencies.
-- [x] Verify the restored storefront and product navigation.
+- [x] Owner dashboard: overview, products, orders, customers, settings
+- [x] Customer accounts (optional), my orders, order confirmation page
+- [x] Stock tracking per size

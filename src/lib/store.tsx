@@ -1,36 +1,10 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import front from "@/assets/tee-front.jpg.asset.json";
-import back from "@/assets/tee-back.jpg.asset.json";
+import type { Product, Receipt } from "./types";
 
-// Placeholder values — replace with the real price and WhatsApp number.
-export const WHATSAPP_NUMBER = "27000000000";
-export const SIZES = ["S", "M", "L", "XL", "XXL"] as const;
+export { SIZES } from "./types";
+export type { Product } from "./types";
 
-export type Product = {
-  slug: string;
-  name: string;
-  price: number;
-  tagline: string;
-  description: string;
-  front: string;
-  back: string;
-};
-
-export const PRODUCTS: Product[] = [
-  {
-    slug: "elim-map-graphic-tee",
-    name: "Elim Map Graphic Tee",
-    price: 350,
-    tagline: "Black · Front & Back Print",
-    description:
-      "Mountain-inspired 0960 ELIM graphic on the front. A detailed map of Mpheni, Waterval, Shirley, Magangeni, Mbhokota and surrounds on the back. Wear your story.",
-    front: front.url,
-    back: back.url,
-  },
-];
-
-export const getProduct = (slug: string) => PRODUCTS.find((p) => p.slug === slug);
-export const zar = (n: number) => `R${n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ")}`;
+export const zar = (n: number) => `R${Number(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ")}`;
 
 export type CartItem = { slug: string; size: string; qty: number };
 type Ctx = {
@@ -40,7 +14,6 @@ type Ctx = {
   remove: (slug: string, size: string) => void;
   clear: () => void;
   count: number;
-  total: number;
 };
 const CartCtx = createContext<Ctx | null>(null);
 const KEY = "elim-cart";
@@ -72,9 +45,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const remove = (slug: string, size: string) =>
     setItems((prev) => prev.filter((p) => !(p.slug === slug && p.size === size)));
   const count = items.reduce((a, i) => a + i.qty, 0);
-  const total = items.reduce((a, i) => a + i.qty * (getProduct(i.slug)?.price ?? 0), 0);
   return (
-    <CartCtx.Provider value={{ items, add, setQty, remove, clear: () => setItems([]), count, total }}>
+    <CartCtx.Provider value={{ items, add, setQty, remove, clear: () => setItems([]), count }}>
       {children}
     </CartCtx.Provider>
   );
@@ -86,28 +58,39 @@ export function useCart() {
   return c;
 }
 
-export type Customer = { name: string; phone: string; address: string; city: string; postal: string; notes: string };
-
-export function buildWhatsAppMessage(items: CartItem[], c: Customer) {
-  const lines = items.map((i) => {
-    const p = getProduct(i.slug)!;
-    return `• ${p.name} — Size ${i.size} × ${i.qty} = ${zar(p.price * i.qty)}`;
+/** Cart lines joined with live product data; items for removed products are dropped. */
+export function cartLines(items: CartItem[], products: Product[]) {
+  return items.flatMap((i) => {
+    const p = products.find((x) => x.slug === i.slug);
+    return p ? [{ ...i, product: p, lineTotal: p.price * i.qty, available: p.stock[i.size] ?? 0 }] : [];
   });
-  const total = items.reduce((a, i) => a + i.qty * (getProduct(i.slug)?.price ?? 0), 0);
-  return [
-    "Hi! I'd like to place an order:",
-    "",
-    ...lines,
-    "",
-    `Total: ${zar(total)}`,
-    "",
-    `Name: ${c.name}`,
-    `Phone: ${c.phone}`,
-    `Delivery address: ${c.address}, ${c.city}, ${c.postal}`,
-    c.notes ? `Notes: ${c.notes}` : "",
-  ]
-    .filter((l, idx, arr) => !(l === "" && idx === arr.length - 1))
-    .join("\n");
 }
 
-export const whatsappUrl = (msg: string) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+export function cartTotals(items: CartItem[], products: Product[], deliveryFee: number) {
+  const subtotal = cartLines(items, products).reduce((a, l) => a + l.lineTotal, 0);
+  return { subtotal, deliveryFee, total: subtotal + deliveryFee };
+}
+
+export function buildWhatsAppMessage(r: Receipt) {
+  const o = r.order;
+  return [
+    `Hi! I'd like to confirm order #${o.order_number}:`,
+    "",
+    ...r.items.map((i) => `• ${i.product_name} — Size ${i.size} × ${i.quantity} = ${zar(i.line_total)}`),
+    "",
+    `Subtotal: ${zar(o.subtotal)}`,
+    Number(o.delivery_fee) > 0 ? `Delivery: ${zar(o.delivery_fee)}` : "",
+    `Total: ${zar(o.total)}`,
+    "",
+    `Name: ${o.customer_name}`,
+    `Phone: ${o.phone}`,
+    `Delivery address: ${[o.address, o.city, o.postal].filter(Boolean).join(", ")}`,
+    o.notes ? `Notes: ${o.notes}` : "",
+  ]
+    .filter((l, idx, arr) => !(l === "" && (idx === arr.length - 1 || arr[idx - 1] === "")))
+    .join("\n")
+    .trim();
+}
+
+export const whatsappUrl = (number: string, msg: string) =>
+  `https://wa.me/${number.replace(/\D/g, "")}?text=${encodeURIComponent(msg)}`;
