@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { useAuth } from "@/hooks/use-auth";
+import { ensureDemoAccount, DEMO_ACCOUNTS } from "@/lib/demo.functions";
 
 const safePath = (p?: string) => (p && p.startsWith("/") && !p.startsWith("//") ? p : undefined);
 
@@ -74,6 +75,19 @@ function AuthPage() {
     if (r.error) toast.error("Google sign-in failed");
   };
 
+  const demo = async (kind: "owner" | "customer") => {
+    setBusy(true);
+    try {
+      await ensureDemoAccount({ data: { kind } });
+      const { error } = await supabase.auth.signInWithPassword(DEMO_ACCOUNTS[kind]);
+      if (error) throw error;
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Demo login failed");
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const input = "mt-1 w-full rounded-sm border border-input bg-card px-3 py-3";
   return (
     <section className="mx-auto max-w-md px-5 py-16">
@@ -81,6 +95,19 @@ function AuthPage() {
         {mode === "in" ? "SIGN IN" : mode === "up" ? "CREATE ACCOUNT" : "RESET PASSWORD"}
       </h1>
       <p className="mt-2 text-muted-foreground">Save your delivery details and see all your orders in one place.</p>
+
+      <div className="mt-6 rounded-sm border-2 border-dashed border-primary p-4">
+        <p className="text-xs font-bold uppercase tracking-widest">Demo login (prototype)</p>
+        <div className="mt-3 grid grid-cols-2 gap-3">
+          <button type="button" disabled={busy} onClick={() => demo("owner")} className="rounded-sm bg-primary py-3 text-xs font-bold uppercase tracking-widest text-primary-foreground disabled:opacity-60">
+            Demo owner
+          </button>
+          <button type="button" disabled={busy} onClick={() => demo("customer")} className="rounded-sm border-2 border-secondary py-3 text-xs font-bold uppercase tracking-widest disabled:opacity-60">
+            Demo customer
+          </button>
+        </div>
+      </div>
+
 
       {mode !== "forgot" && (
         <>
