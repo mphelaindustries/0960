@@ -8,3 +8,4 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+- Products, cart (localStorage) and WhatsApp message building live in src/lib/store.tsx; no backend yet so the store stays static until order management is needed.
