@@ -1,8 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import front from "@/assets/tee-front.jpg.asset.json";
 import back from "@/assets/tee-back.jpg.asset.json";
-import frontArtwork from "@/assets/tee-front-texture.jpg.asset.json";
-import backArtwork from "@/assets/tee-back-texture.jpg.asset.json";
 
 // Placeholder values — replace with the real price and WhatsApp number.
 export const WHATSAPP_NUMBER = "27000000000";
@@ -16,8 +14,6 @@ export type Product = {
   description: string;
   front: string;
   back: string;
-  frontArtwork: string;
-  backArtwork: string;
 };
 
 export const PRODUCTS: Product[] = [
@@ -30,8 +26,6 @@ export const PRODUCTS: Product[] = [
       "Mountain-inspired 0960 ELIM graphic on the front. A detailed map of Mpheni, Waterval, Shirley, Magangeni, Mbhokota and surrounds on the back. Wear your story.",
     front: front.url,
     back: back.url,
-    frontArtwork: frontArtwork.url,
-    backArtwork: backArtwork.url,
   },
 ];
 

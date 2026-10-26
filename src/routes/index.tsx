@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ShoppingCart } from "lucide-react";
 import { PRODUCTS, zar } from "@/lib/store";
 import { TornEdge } from "@/components/site";
-import { RotatingProduct } from "@/components/RotatingProduct";
+import poster from "@/assets/poster.jpg.asset.json";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
@@ -25,15 +25,17 @@ function Home() {
   return (
     <>
       {/* HERO */}
-      <section className="shirt-hero grain relative overflow-hidden bg-ink text-ink-foreground">
-        <div className="shirt-hero-scene"><RotatingProduct product={p} /></div>
-        <div className="pointer-events-none relative mx-auto max-w-7xl px-5 pb-4 pt-10 md:pb-24 md:pt-16">
-          <div className="pointer-events-auto max-w-sm md:max-w-md">
+      <section className="grain relative overflow-hidden bg-ink text-ink-foreground">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 pb-16 pt-12 md:grid-cols-2 md:pb-24">
+          <div>
             <p className="font-hand text-2xl text-primary">Simple · Clean · Unique</p>
-            <h1 className="mt-2 font-display text-7xl leading-[0.9] sm:text-8xl lg:text-[8rem]">
-              ELIM<span className="text-primary">.</span><br />0960
+            <h1 className="mt-2 font-display text-7xl leading-[0.85] sm:text-8xl lg:text-[9rem]">
+              WEAR
+              <br />
+              <span className="brush inline-block text-primary-foreground">YOUR</span>
+              <br />
+              STORY.
             </h1>
-            <p className="mt-3 font-hand text-2xl text-primary">Wear your story.</p>
             <p className="mt-6 max-w-md text-lg text-ink-muted">
               More than a T-shirt. A connection to where you're from.
             </p>
@@ -45,6 +47,15 @@ function Home() {
                 View all
               </Link></Button>
             </div>
+          </div>
+          <div className="relative">
+            <img src={poster.url} alt="Elim T-shirt collection — front and back designs" className="mx-auto w-full max-w-md -rotate-2 border-4 border-ink-foreground shadow-2xl" />
+            <span className="absolute -right-2 top-6 rotate-3 bg-primary px-3 py-2 font-display text-xl leading-none text-primary-foreground md:-right-6">
+              FRONT &amp; BACK<br />PRINT
+            </span>
+            <span className="absolute -left-2 bottom-10 -rotate-3 bg-ink-foreground px-3 py-2 font-display text-xl leading-none text-ink md:-left-6">
+              SUPPORT<br />LOCAL
+            </span>
           </div>
         </div>
         <TornEdge className="absolute bottom-0 text-paper" />
@@ -119,7 +130,8 @@ export function ProductCard({ slug }: { slug: string }) {
     <Link to="/product/$slug" params={{ slug }} className="group block">
       <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-card">
         <span className="absolute left-0 top-0 z-10 bg-secondary px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-secondary-foreground">New</span>
-        <RotatingProduct product={x} compact />
+        <img src={x.front} alt={x.name} className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:opacity-0" />
+        <img src={x.back} alt="" className="absolute inset-0 h-full w-full scale-105 object-cover opacity-0 transition duration-500 group-hover:scale-100 group-hover:opacity-100" />
       </div>
       <p className="mt-3 text-sm font-bold uppercase">{x.name}</p>
       <p className="font-bold">{zar(x.price)}</p>
