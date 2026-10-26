@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { PRODUCTS } from "@/lib/store";
-import { ProductCard } from "./index";
+import { productsQuery, useProducts } from "@/lib/catalog";
+import { ProductCard } from "@/components/product-card";
 
 export const Route = createFileRoute("/shop")({
   head: () => ({
@@ -13,15 +13,22 @@ export const Route = createFileRoute("/shop")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: () => (
+  loader: ({ context }) => context.queryClient.ensureQueryData(productsQuery),
+  errorComponent: () => <p className="py-24 text-center">Couldn't load the shop. Please refresh.</p>,
+  component: Shop,
+});
+
+function Shop() {
+  const products = useProducts();
+  return (
     <section className="mx-auto max-w-7xl px-5 py-14">
       <h1 className="font-display text-7xl leading-none">SHOP</h1>
-      <p className="mt-2 text-muted-foreground">One design for now — more coming soon.</p>
+      <p className="mt-2 text-muted-foreground">More designs coming soon.</p>
       <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {PRODUCTS.map((p) => (
-          <ProductCard key={p.slug} slug={p.slug} />
+        {products.map((p) => (
+          <ProductCard key={p.slug} product={p} />
         ))}
       </div>
     </section>
-  ),
-});
+  );
+}
