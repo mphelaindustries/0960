@@ -57,7 +57,7 @@ function Home() {
             <span className="absolute -right-2 top-6 rotate-3 bg-primary px-3 py-2 font-display text-xl leading-none text-primary-foreground md:-right-6">
               FRONT &amp; BACK<br />PRINT
             </span>
-            <span className="absolute -left-2 bottom-10 -rotate-3 bg-ink-foreground px-3 py-2 font-display text-xl leading-none text-ink md:-left-6">
+            <span className="absolute -left-2 top-8 -rotate-3 bg-ink-foreground px-3 py-2 font-display text-xl leading-none text-ink md:-left-6">
               SUPPORT<br />LOCAL
             </span>
           </div>
