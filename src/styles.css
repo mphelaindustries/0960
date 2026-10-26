@@ -72,6 +72,10 @@
 }
 
 :root {
+  --shirt-cloth: #121212;
+  --shirt-pedestal: #424242;
+  --shirt-accent: #ffc400;
+  --shirt-light: #ffffff;
   --radius: 0.25rem;
   --ink: oklch(0.13 0 0);
   --ink-foreground: oklch(1 0 0);
@@ -161,6 +165,12 @@
 }
 
 body { font-family: var(--font-body); }
+.shirt-hero { min-height: 610px; }
+.shirt-hero-scene { position: absolute; inset: 0 0 0 35%; }
+@media (max-width: 767px) {
+  .shirt-hero { min-height: 0; }
+  .shirt-hero-scene { position: relative; inset: auto; height: 390px; }
+}
 @utility grain {
   background-image: radial-gradient(oklch(1 0 0 / 0.05) 1px, transparent 1px), radial-gradient(oklch(1 0 0 / 0.03) 1px, transparent 1px);
   background-size: 3px 3px, 7px 7px;
