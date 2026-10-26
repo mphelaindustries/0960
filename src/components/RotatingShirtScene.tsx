@@ -56,7 +56,7 @@ function Turntable(props: ShirtSceneProps) {
 
 export default function RotatingShirtScene(props: ShirtSceneProps) {
   return (
-    <Canvas dpr={[1, 1.5]} camera={{ position: [0, 2.6, 8.2], fov: props.compact ? 36 : 34 }} gl={{ antialias: true, alpha: true }}>
+    <Canvas dpr={[1, 1.5]} camera={{ position: [0, 2.6, 8.2], fov: props.compact ? 36 : 34 }} gl={{ antialias: true, alpha: true }} onCreated={({ camera }) => camera.lookAt(0, 1.85, 0)}>
       <ambientLight intensity={1.2} />
       <directionalLight position={[3, 5, 5]} intensity={3} />
       <directionalLight position={[-4, 2, -3]} intensity={2} />

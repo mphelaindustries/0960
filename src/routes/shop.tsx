@@ -9,6 +9,8 @@ export const Route = createFileRoute("/shop")({
       { name: "description", content: "Browse the ELIM 0960 graphic tee collection. Prices in ZAR." },
       { property: "og:title", content: "Shop — ELIM 0960 Collection" },
       { property: "og:description", content: "Browse locally inspired graphic tees." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: () => (

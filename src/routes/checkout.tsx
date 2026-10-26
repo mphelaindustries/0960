@@ -11,6 +11,8 @@ export const Route = createFileRoute("/checkout")({
       { name: "description", content: "Enter your delivery details and send your order via WhatsApp." },
       { property: "og:title", content: "Checkout — ELIM 0960" },
       { property: "og:description", content: "Order via WhatsApp." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Checkout,
