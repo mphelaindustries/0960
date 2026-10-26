@@ -1,3 +1,3 @@
-- [x] Replace the hero poster with a rotating T-shirt on a pedestal.
-- [x] Reuse the 3D display in home and shop collection items.
-- [x] Verify artwork, rotation, product navigation and narrow-screen layout.
+- [x] Restore the original poster hero and front/back product photos.
+- [x] Remove 3D display code, model assets, styles and dependencies.
+- [x] Verify the restored storefront and product navigation.
