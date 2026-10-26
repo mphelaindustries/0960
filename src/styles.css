@@ -195,9 +195,35 @@ body { font-family: var(--font-body); }
   animation: logo-arrive 1.3s cubic-bezier(0.45, 0, 0.25, 1) both;
   will-change: transform, opacity, filter;
 }
+
+/* Intro splash: logo arrives from the back on page load, then fades away. */
+.intro-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: var(--ink);
+  pointer-events: none;
+  animation: splash-out 0.5s ease-in 1.45s both;
+}
+.intro-logo {
+  width: min(72vw, 360px);
+  animation: logo-arrive 1.2s cubic-bezier(0.45, 0, 0.25, 1) both;
+  will-change: transform, opacity, filter;
+}
+@keyframes splash-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .logo-arrive {
     animation: none;
+  }
+  .intro-splash {
+    display: none;
   }
 }
 
