@@ -17,7 +17,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const p = PRODUCTS[0];
+  const p = PRODUCTS[0]!;
   return (
     <>
       {/* HERO */}
