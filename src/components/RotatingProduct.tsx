@@ -33,7 +33,7 @@ export function RotatingProduct({ product, compact = false }: { product: Product
   }, []);
   const fallback = <img src={product.front} alt={product.name} className="h-full w-full object-contain" />;
   return (
-    <div ref={container} className={`relative h-full w-full ${compact ? "" : "min-h-[340px]"}`} role="img" aria-label={`${product.name}, rotating front and back display on a pedestal`}>
+    <div ref={container} className="relative h-full w-full" role="img" aria-label={`${product.name}, rotating front and back display on a pedestal`}>
       <DisplayBoundary fallback={fallback}>
         <ClientOnly fallback={fallback}>
           <Suspense fallback={fallback}>

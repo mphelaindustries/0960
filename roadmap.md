@@ -1,3 +1,3 @@
 - [x] Replace the hero poster with a rotating T-shirt on a pedestal.
 - [x] Reuse the 3D display in home and shop collection items.
-- [ ] Verify artwork, rotation, product navigation and narrow-screen layout.
+- [x] Verify artwork, rotation, product navigation and narrow-screen layout.

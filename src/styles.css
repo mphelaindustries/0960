@@ -186,6 +186,12 @@ body { font-family: var(--font-body); }
   .shirt-hero h1 { font-size: 44px; }
   .shirt-hero p:nth-of-type(3) { display: none; }
 }
+@media (min-width: 600px) and (max-width: 767px) {
+  .shirt-hero { display: block; min-height: 370px; }
+  .shirt-hero-scene { position: absolute; inset: 0 0 0 40%; height: 100%; }
+  .shirt-hero > div:nth-child(2) { width: 100%; }
+  .shirt-hero > div:nth-child(2) > div { max-width: 42%; }
+}
 @utility grain {
   background-image: radial-gradient(oklch(1 0 0 / 0.05) 1px, transparent 1px), radial-gradient(oklch(1 0 0 / 0.03) 1px, transparent 1px);
   background-size: 3px 3px, 7px 7px;
