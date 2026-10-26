@@ -19,6 +19,7 @@ function Shirt({ frontArtwork, backArtwork, palette }: ShirtSceneProps) {
   const [front, back] = useTexture([frontArtwork, backArtwork]);
   const geometry = useMemo(() => unwrapShirt(scene), [scene]);
   useEffect(() => () => geometry.dispose(), [geometry]);
+  if (!front || !back) return null;
   front.colorSpace = back.colorSpace = SRGBColorSpace;
   return (
     <mesh geometry={geometry} position-y={0.49} castShadow>

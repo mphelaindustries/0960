@@ -7,9 +7,9 @@ import type { Product } from "@/lib/store";
 const Scene = lazy(() => import("./RotatingShirtScene"));
 
 class DisplayBoundary extends Component<{ children: ReactNode; fallback: ReactNode }, { failed: boolean }> {
-  state = { failed: false };
+  override state = { failed: false };
   static getDerivedStateFromError() { return { failed: true }; }
-  render() { return this.state.failed ? this.props.fallback : this.props.children; }
+  override render() { return this.state.failed ? this.props.fallback : this.props.children; }
 }
 
 export function RotatingProduct({ product, compact = false }: { product: Product; compact?: boolean }) {
@@ -27,7 +27,7 @@ export function RotatingProduct({ product, compact = false }: { product: Product
     setRotating(!motion.matches);
     const update = () => setRotating(!motion.matches);
     motion.addEventListener("change", update);
-    const observer = new IntersectionObserver(([entry]) => setActive(entry.isIntersecting), { rootMargin: "100px" });
+    const observer = new IntersectionObserver(([entry]) => setActive(entry?.isIntersecting ?? false), { rootMargin: "100px" });
     observer.observe(container.current);
     return () => { observer.disconnect(); motion.removeEventListener("change", update); };
   }, []);
@@ -41,7 +41,7 @@ export function RotatingProduct({ product, compact = false }: { product: Product
           </Suspense>
         </ClientOnly>
       </DisplayBoundary>
-      {!compact && <div className="absolute bottom-3 right-5 flex gap-2">
+      {!compact && <div className="absolute bottom-12 right-5 z-10 flex gap-2">
         <Button variant="outline" size="icon" className="border-line bg-ink text-ink-foreground" aria-label={rotating ? "Pause rotation" : "Start rotation"} title={rotating ? "Pause rotation" : "Start rotation"} onClick={() => setRotating(!rotating)}>{rotating ? <Pause /> : <Play />}</Button>
         <Button variant="outline" size="icon" className="border-line bg-ink text-ink-foreground" aria-label="Show back design" title="Show back design" onClick={() => { setRotating(false); setAngle(angle === 0 ? Math.PI : 0); }}><RotateCcw /></Button>
       </div>}
