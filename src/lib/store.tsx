@@ -30,7 +30,7 @@ export const PRODUCTS: Product[] = [
 ];
 
 export const getProduct = (slug: string) => PRODUCTS.find((p) => p.slug === slug);
-export const zar = (n: number) => `R${n.toLocaleString("en-ZA", { minimumFractionDigits: 2 })}`;
+export const zar = (n: number) => `R${n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ")}`;
 
 export type CartItem = { slug: string; size: string; qty: number };
 type Ctx = {
